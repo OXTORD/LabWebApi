@@ -1,10 +1,15 @@
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using LabWebAPI.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+//Infrastructure
+builder.Services.AddRepositories();
+builder.Services.AddDbContext(builder.Configuration.GetConnectionString("DefaultConnection"));
+
 
 builder.Services.AddSpaStaticFiles(configuration =>
 {
@@ -44,5 +49,7 @@ app.UseSpa(spa =>
     spa.Options.SourcePath = "ClientApp";
     spa.UseAngularCliServer(npmScript: "start");
 });
+
+
 
 app.Run();
